@@ -11,7 +11,8 @@ import Modal from "../../components/Modal";
 import imgLocalModal from "../../assets/plataforma/cuate.svg";
 import InputPesquisa from "./components/InputPesquisa";
 import MapComponent from "../../components/MapComponent";
-import Loading from "../../components/loading";
+import Loading from "../../components/Loading";
+
 
 function Inicio() {
   const [shoppingsProximo, setShoppingsProximo] = useState([]);
@@ -53,6 +54,7 @@ function Inicio() {
         .get("/lojas")
         .then((response) => {
           setLoja(response.data);
+          console.log(response.data);
           resolve();
         })
         .catch((error) => {
@@ -64,7 +66,6 @@ function Inicio() {
 
 
   const getShoppingsProximo = () => {
-    return new Promise((resolve, reject) => {
       api
         .get(`/shopping/proximos?id=${idUser}`)
         .then((res) => {
@@ -75,7 +76,6 @@ function Inicio() {
         .catch((err) => {
           reject(err);
         });
-    });
   };
 
 
@@ -123,22 +123,20 @@ function Inicio() {
   };
 
   useEffect(() => {
-    Promise.all([getShoppingsProximo(), getShopping(), getLoja()])
+    Promise.all([getShopping(), getLoja()])
       .then(() => {
         setLoading(false);
       })
       .catch((error) => {
         console.error('Error:', error);
-        setLoading(false);
+        setLoading(true);
       });
 
     const savedShoppingsProximo = sessionStorage.getItem('shoppingsProximo');
     const savedEndereco = sessionStorage.getItem('endereco');
     if (savedShoppingsProximo) {
       setShoppingsProximo(JSON.parse(savedShoppingsProximo));
-    } else {
-      getShoppingsProximo();
-    }
+    } 
     if (savedEndereco) {
       setEndereco(JSON.parse(savedEndereco));
     }
@@ -204,7 +202,7 @@ function Inicio() {
           </Modal>
         </>
       )}
-      {loading && <div><Loading /></div>}
+      {loading && <Loading />}
       {!loading && (
         <>
           <Header endereco={endereco.rua} onClick={() => setShowModal(true)} />
@@ -260,7 +258,7 @@ function Inicio() {
                     navigate(`/shopping/${shopping.id}/${shopping.nome}`)
                   }
                   key={shopping.id}
-                  nomeLoja={shopping.nome}
+                  nomeLoja={shopping.nome}                  
                 />
               ))}
             </div>
@@ -273,6 +271,7 @@ function Inicio() {
                   onClick={() => navigate(`/loja/${loja.id}/${loja.nome}`)}
                   key={loja.id}
                   nomeLoja={loja.nome}
+                  imgLoja={`http://3.91.11.40:8080/midias/imagens/${loja.imagens[0]?.nomeArquivoSalvo}`}
                 />
               ))}
             </div>
