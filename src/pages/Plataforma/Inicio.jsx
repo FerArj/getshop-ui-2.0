@@ -39,6 +39,7 @@ function Inicio() {
         .get("/shopping")
         .then((response) => {
           setShopping(response.data);
+          console.log(response.data);
           resolve();
         })
         .catch((error) => {
@@ -131,6 +132,13 @@ function Inicio() {
 
     return `${mensagem}, ${nomeUsuario}!`;
   };
+
+  const handleNavigate = (shopping) => {
+    const image = shopping.imagens[0]?.nomeArquivoSalvo;
+      navigate(`/shopping/${shopping.id}/${shopping.nome}`, {
+        state: { image }
+      });
+  }
 
   const closeModal = () => {
     setShowModal(false);
@@ -254,11 +262,10 @@ function Inicio() {
               <div className="flex flex-wrap gap-5">
                 {shoppingsProximo.map((shopping) => (
                   <Card
-                    onClick={() =>
-                      navigate(`/shopping/${shopping.id}/${shopping.nome}`)
-                    }
+                    onClick={() => handleNavigate(shopping)}
                     key={shopping.id}
                     nomeLoja={shopping.nome}
+                    imgLoja={`http://${import.meta.env.VITE_LOCAL_IP}:${import.meta.env.VITE_API_PORT}/api/midias/imagens${shopping.imagens[0]?.nomeArquivoSalvo}`}
                   />
                 ))}
               </div>
@@ -270,13 +277,11 @@ function Inicio() {
             <div className="flex flex-wrap gap-5">
               {shopping.map((shopping) => (
                 <Card
-                  onClick={() =>
-                    navigate(`/shopping/${shopping.id}/${shopping.nome}`)
-                  }
+                  onClick={() => handleNavigate(shopping)}
                   key={shopping.id}
                   nomeLoja={shopping.nome}
-                  imgLoja={`http://localhost:8080/api/midias/imagens/${shopping.imagens?.nomeArquivoSalvo}`}
-                />
+                  imgLoja={`http://${import.meta.env.VITE_LOCAL_IP}:${import.meta.env.VITE_API_PORT}/api/midias/imagens/${shopping.imagens[0]?.nomeArquivoSalvo}`}
+                  />
               ))}
             </div>
           </div>
@@ -288,7 +293,7 @@ function Inicio() {
                   onClick={() => navigate(`/loja/${loja.id}/${loja.nome}`)}
                   key={loja.id}
                   nomeLoja={loja.nome}
-                  imgLoja={`http://localhost:8080/api/midias/imagens/${loja.imagens[0]?.nomeArquivoSalvo}`}
+                  imgLoja={`http://${import.meta.env.VITE_LOCAL_IP}:${import.meta.env.VITE_API_PORT}/api/midias/imagens/${loja.imagens[0]?.nomeArquivoSalvo}`}
                 />
               ))}
             </div>
