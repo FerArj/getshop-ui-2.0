@@ -92,9 +92,9 @@ function SideBar({fecharCarrinho, show}) {
                 </>
             ) : (
                 <>
-                    <div className="px-4"><p>Seus itens no carrinho</p></div>
+                    {/* <div className="px-4"><p>Seus itens no carrinho</p></div> */}
                     <div className="flex flex-col h-[90%]">
-                        <div className="overflow-y-auto h-96">
+                        <div className="overflow-y-auto h-full">
                             <div
                                 className="flex flex-col mt-5 gap-5"
                             >
@@ -111,10 +111,7 @@ function SideBar({fecharCarrinho, show}) {
                                     </div>
                                 ))}
                             </div>
-                        </div>
-                        <div className="mt-12 flex justify-center">
-                            <div className="bg-[#0000004a] w-4/5  h-[0.1px]"></div>
-                        </div>
+                        </div> 
                         <div className="flex flex-col justify-evenly h-full">
                             <div className="flex flex-col p-4 border-t-2 bg-white ">
                                 <div className="flex justify-between">

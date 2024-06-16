@@ -55,7 +55,6 @@ function Inicio() {
         .get("/lojas")
         .then((response) => {
           setLoja(response.data);
-          console.log(response.data);
           resolve();
         })
         .catch((error) => {
@@ -135,9 +134,9 @@ function Inicio() {
 
   const handleNavigate = (shopping) => {
     const image = shopping.imagens[0]?.nomeArquivoSalvo;
-      navigate(`/shopping/${shopping.id}/${shopping.nome}`, {
-        state: { image }
-      });
+    navigate(`/shopping/${shopping.id}/${shopping.nome}`, {
+      state: { image }
+    });
   }
 
   const closeModal = () => {
@@ -265,7 +264,7 @@ function Inicio() {
                     onClick={() => handleNavigate(shopping)}
                     key={shopping.id}
                     nomeLoja={shopping.nome}
-                    imgLoja={`http://${import.meta.env.VITE_LOCAL_IP}:${import.meta.env.VITE_API_PORT}/api/midias/imagens${shopping.imagens[0]?.nomeArquivoSalvo}`}
+                    imgLoja={`${import.meta.env.VITE_PROD_IP}/midias/imagens${shopping.imagens[0]?.nomeArquivoSalvo}`}
                   />
                 ))}
               </div>
@@ -280,8 +279,8 @@ function Inicio() {
                   onClick={() => handleNavigate(shopping)}
                   key={shopping.id}
                   nomeLoja={shopping.nome}
-                  imgLoja={`http://${import.meta.env.VITE_LOCAL_IP}:${import.meta.env.VITE_API_PORT}/api/midias/imagens/${shopping.imagens[0]?.nomeArquivoSalvo}`}
-                  />
+                  imgLoja={`${import.meta.env.VITE_PROD_IP}/midias/imagens/${shopping.imagens[0]?.nomeArquivoSalvo}`}
+                />
               ))}
             </div>
           </div>
@@ -293,11 +292,12 @@ function Inicio() {
                   onClick={() => navigate(`/loja/${loja.id}/${loja.nome}`)}
                   key={loja.id}
                   nomeLoja={loja.nome}
-                  imgLoja={`http://${import.meta.env.VITE_LOCAL_IP}:${import.meta.env.VITE_API_PORT}/api/midias/imagens/${loja.imagens[0]?.nomeArquivoSalvo}`}
+                  imgLoja={`${import.meta.env.VITE_PROD_IP}/midias/imagens/${loja.imagens[0]?.nomeArquivoSalvo}`}
                 />
               ))}
             </div>
           </div>
+          <div className="h-16 mt-10 mb-10 bg-[#af97c89d]"></div>
           <Footer />
         </>
       )}

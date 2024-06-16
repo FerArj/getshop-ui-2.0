@@ -2,12 +2,11 @@ import axios from "axios";
 
 const ip = {
   local: import.meta.env.VITE_LOCAL_IP,
-  debian: import.meta.env.VITE_DEBIAN_IP,
-  ec2: import.meta.env.VITE_EC2_IP
+  prod: import.meta.env.VITE_PROD_IP,
 }
 
 const api = axios.create({
-  baseURL: `http://${ip.local}:${import.meta.env.VITE_API_PORT}/api`,
+  baseURL: `${ip.prod}`,
   timeout: 50000,
 });
 
